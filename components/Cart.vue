@@ -14,6 +14,7 @@
                     <button @click="increase(item.id)" class="counter-button">+</button>
                 </div>
             </div>
+            <p v-if="invalidAddress" class="invalidAddress">Адрес доставки не введён</p>
         </template>
         <template #footer>
             <span class="modal-pricetag">{{ sumPrice }} ₽</span>
@@ -46,14 +47,20 @@
 
         data() {
             return {
+                invalidAddress: false,
                 orderReceived: false
             }
         },
 
         methods: {
             placeOrder() {
-                this.cartStore.cart = []
-                this.orderReceived = true
+                if (this.cartStore.deliveryAddress.length) {
+                    this.cartStore.cart = []
+                    this.orderReceived = true
+                    this.cartStore.deliveryAddress = ''
+                } else {
+                    this.invalidAddress = true
+                }
             },
 
             cancelOrder() {
@@ -92,3 +99,9 @@
         }
     })
 </script>
+<style>
+.invalidAddress {
+    color: red;
+    text-align: center;
+}
+</style>

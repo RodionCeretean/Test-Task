@@ -4,7 +4,8 @@ export const useCartStore = defineStore('cart', {
     state() {
         return {
             cart: [] as { id: string, name: string, price: number, counter: number, added?: boolean }[],
-            modal: false
+            modal: false,
+            deliveryAddress: ''
         }
     },
 
@@ -17,6 +18,10 @@ export const useCartStore = defineStore('cart', {
     },
 
     actions: {
+        setDeliveryAddress(payload: string) {
+            this.deliveryAddress = payload
+        },
+
         addItem(payload: { id: string, name: string, price: number, counter: number, added?: boolean }): void {
             this.cart.push(payload)
         },
@@ -28,7 +33,10 @@ export const useCartStore = defineStore('cart', {
 
         decrease(id: string) {
             const currentItem = this.cart.find(item => item.id === id)
-            if (currentItem) currentItem.counter--
+            if (currentItem && currentItem.counter === 1) this.cart = this.cart.filter(item => item.id !== id)
+            else {
+                if (currentItem) currentItem.counter--
+            }
         },
 
         showCart() {

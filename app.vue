@@ -1,7 +1,4 @@
 <template>
-    <Head>
-        <Title>{{ metaTitle }}</Title>
-    </Head>
     <div>
         <NuxtLayout>
             <NuxtPage/>
@@ -10,18 +7,11 @@
 </template>
 
 <script lang="ts">
-    import db from 'public/db/db.json'
     import {mapStores} from "pinia";
     import {useAuthStore} from "~/store/authStore";
     import {useCartStore} from "~/store/cartStore";
 
     export default defineNuxtComponent({
-        // head() {
-        //     return {
-        //         title: this.metaTitle
-        //     }
-        // },
-
         mounted() {
             window.addEventListener('beforeunload', event => {
                 event.preventDefault()
@@ -33,19 +23,7 @@
             this.authStore.loading = false
         },
 
-        data() {
-          return {
-              titl: 'The first',
-              db: db.db
-          }
-        },
-
         computed: {
-            metaTitle() {
-                const currentTitle = this.db['partners'].filter(partner => partner['products'].replace('.json', '') === this.$route['params'].restaurant)[0]
-                return currentTitle ? `${currentTitle.name} — доставка еды на дом` : 'Delivery Food — доставка еды на дом'
-            },
-
             ...mapStores(useAuthStore, useCartStore),
         },
 

@@ -24,15 +24,15 @@
     import {mapStores} from "pinia";
     import {useCartStore} from "~/store/cartStore";
     import {defineComponent} from 'vue'
-import type { PropType } from "vue";
-import type { FoodItem } from "~/types/FoodItem";
+    import type { PropType } from "vue";
+    import type { FoodItem } from "~/types/FoodItem";
     import {useAuthStore} from "~/store/authStore";
 
     export default defineComponent({
         name: 'Dish',
 
         mounted() {
-          this.isAddedToCart = this.cartStore.cart.find(item => item.id === this.item.id)?.added === true
+            this.isAddedToCart = this.cartStore.cart.find(item => item.id === this.item.id)?.added === true
         },
 
         props: {
@@ -83,6 +83,9 @@ import type { FoodItem } from "~/types/FoodItem";
                 deep: true,
                 handler(value) {
                     if (!value.length) this.isAddedToCart = false
+                    else {
+                        if (!this.cartStore.cart.find(item => item.id === this.item.id)) this.isAddedToCart = false
+                    }
                 }
             }
         }

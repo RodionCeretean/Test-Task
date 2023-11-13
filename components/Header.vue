@@ -5,7 +5,7 @@
                 <img src="img/icon/logo.svg" alt="Logo"/>
             </NuxtLink>
             <label class="address">
-                <input type="text" class="input input-address" placeholder="Адрес доставки"/>
+                <input :value="deliveryAddress" @input="setDeliveryAddress($event.target.value)" type="text" class="input input-address" placeholder="Адрес доставки"/>
             </label>
             <div class="buttons" style="position: relative">
                 <span class="user-name">{{ user }}</span>
@@ -37,6 +37,10 @@
         name: "Header",
 
         methods: {
+            setDeliveryAddress(address: string) {
+                this.cartStore.setDeliveryAddress(address)
+            },
+
             logout() {
                 this.authStore.user = ''
                 this.cartStore.cart = []
@@ -52,16 +56,20 @@
         },
 
         computed: {
+            deliveryAddress() {
+                return this.cartStore.deliveryAddress
+            },
+
             isLoading() {
                 return this.authStore.loading
             },
-            
+
             user() {
                 return this.authStore.user
             },
 
             cartItems() {
-              return this.cartStore.cart.length
+                return this.cartStore.cart.length
             },
 
             ...mapStores(useCartStore, useAuthStore),

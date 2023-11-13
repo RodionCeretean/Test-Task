@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <Title>Delivery Food — доставка еды на дом</Title>
+    </Head>
     <Promo/>
     <Restaurants :db="db" :partners="partners"/>
 </template>

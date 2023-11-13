@@ -1,4 +1,7 @@
 <template>
+    <Head>
+        <Title>{{ `${restaurant.name} — доставка еды на дом` }}</Title>
+    </Head>
     <section class="menu">
         <div class="section-heading">
             <h2 class="section-title restaurant-title">{{ restaurant?.name }}</h2>

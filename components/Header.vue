@@ -22,6 +22,7 @@
                     <span class="button-text">Выйти</span>
                     <span class="button-out-svg"></span>
                 </button>
+                <p v-if="!user">Войдите, чтобы делать заказы</p>
             </div>
         </header>
     </div>
